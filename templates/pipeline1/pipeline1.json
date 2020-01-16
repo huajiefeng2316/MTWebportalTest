@@ -1,0 +1,71 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/pipeline1')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Web1",
+						"type": "WebActivity",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"url": "http://40.77.231.156:9186/api/mp/submission",
+							"method": "POST",
+							"headers": {
+								"Content-Type": "application/json",
+								"Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImpodWEiLCJhZG1pbiI6ZmFsc2UsImlhdCI6MTU3OTE2Mjc5NSwiZXhwIjoxNTc5NzY3NTk1fQ._foh_f_7Wc0ZI7_KPskEas-jXfmA4aPrxptrTKxhNZc"
+							},
+							"body": {
+								"ExecutablePackagePath": "hdfs://namenode-ivip.yarn-prod-bn2.bn2.ap.gbl/user/yipen/portalSample_1",
+								"InputDataPath": "hdfs://namenode-ivip.yarn-prod-bn2.bn2.ap.gbl/user/yipen/portalSample_1",
+								"App_Args": "Sample.zip\\Sample\\what.exe  %%inHDFSPath_Data%%/people.json",
+								"SparkNet_Runtime": "microsoft-spark-2.3.x-0.2.0.jar",
+								"OutputDataPathOnHDFS": "hdfs://namenode-ivip.yarn-prod-bn2.bn2.ap.gbl/user/yipen/",
+								"SubCluster": "BN2-1",
+								"Job_Queue": "default",
+								"InputDataRetention": "false",
+								"Job_MaxRetryNum": "1",
+								"JobNodeLabel": "*persistent*",
+								"JobPriority": "0",
+								"Spark_DriverCores": "1",
+								"Spark_DriverMemGB": "4",
+								"Spark_AMCores": "1",
+								"Spark_AMMemGB": "4",
+								"Spark_Executors": "2",
+								"Spark_ExecutorCores": "1",
+								"Spark_ExecutorMemGB": "4",
+								"Owner": "FAREAST\\yipen",
+								"moduleId": "0c3e337e-89c0-4b64-8788-6703199fa324",
+								"moduleName": "[Multitenancy] Spark.Net on MT for MP",
+								"run": "run.cmd -outHDFSPathFile_Data &quot;{out:AnyFile:outHDFSPath_Data}&quot; -inAppFile_Executable &quot;[{in:AnyFile:ExecutablePackagePath:default,hdfs://namenode-ivip.yarn-prod-bn2.bn2.ap.gbl/user/yipen/portalSample_1}]&quot; -inAppFile_Data &quot;[{in:AnyFile:InputDataPath:default,hdfs://namenode-ivip.yarn-prod-bn2.bn2.ap.gbl/user/yipen/portalSample_1}]&quot; -App_Args &quot;[(App_Args:default,Sample.zip\\Sample\\what.exe  %inHDFSPath_Data%/people.json)]&quot; -SparkNet_Runtime &quot;(SparkNet_Runtime:enum,microsoft-spark-2.3.x-0.2.0.jar:default,microsoft-spark-2.3.x-0.2.0.jar)&quot; -Job_OutHDFSPathRootDir &quot;(OutputDataPathOnHDFS:default,hdfs://namenode-ivip.yarn-prod-bn2.bn2.ap.gbl/user/yipen/)&quot; &quot; %CLUSTER%=(SubCluster:enum,BN2-0,BN2-1,BN2-2,BN2-3,BN2-4,BN2-5,CO4-0,CO4-1,CO4-2,CO4-3,CO4-4,CO4-5,CH1B-0,CH1B-1,CH1B-2,CH1B-3,CH1B-4,CH1B-5,MTPrime-CO4-0,MTPrime-CO4-2,MTPrime-BN2-0,MTPrime-BN2-1:default,BN2-0)&quot; -Job_Queue &quot;(Job_Queue:enum,default,prod-new,hyperv,DLAdsSelection:default,default)&quot; -Job_DelHDFSDataOnSucc &quot;(InputDataRetention:enum,true,false:default,false)&quot; -Job_MaxRetryNum &quot;(Job_MaxRetryNum:int,0,50:default,1)&quot; -Job_NodeLabel &quot;(JobNodeLabel:default,*persistent*)&quot; -Spark_JobPriority &quot;(JobPriority:int, 0,100:default,0)&quot; -Spark_DriverCores &quot;(Spark_DriverCores:int,1,44:default,1)&quot; -Spark_DriverMemGB &quot;(Spark_DriverMemGB:int,1,120:default,4)&quot; -Spark_AMCores &quot;(Spark_AMCores:int,1,44:default,1)&quot; -Spark_AMMemGB &quot;(Spark_AMMemGB:int,1,120:default,4)&quot; -Spark_Executors &quot;(Spark_Executors:int,1,:default,2)&quot; -Spark_ExecutorCores &quot;(Spark_ExecutorCores:int,1,44:default,1)&quot; -Spark_ExecutorMemGB &quot;(Spark_ExecutorMemGB:int,1,120:default,4)&quot;"
+							}
+						}
+					}
+				],
+				"annotations": []
+			},
+			"dependsOn": []
+		}
+	]
+}
