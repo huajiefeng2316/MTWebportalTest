@@ -187,8 +187,7 @@
 						"pipelineReference": {
 							"referenceName": "pipeline11",
 							"type": "PipelineReference"
-						},
-						"parameters": {}
+						}
 					}
 				],
 				"type": "ScheduleTrigger",
